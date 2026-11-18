@@ -1,0 +1,33 @@
+name: Weekly forecast update
+
+on:
+  schedule:
+    - cron: "0 15 * * 0"   # Sundays at 10 a.m. Eastern, after CDC's weekly update
+  workflow_dispatch:        # adds a "Run workflow" button for testing
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Rebuild data, forecasts, and dashboard files
+        run: |
+          python 01_get_data.py
+          python 02_explore.py
+          python 03_baselines.py
+          python 06_calibrated_intervals.py
+          python 07_tableau_prep.py
+      - name: Commit updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/tableau_*.csv figures/
+          git diff --cached --quiet || git commit -m "Weekly forecast update"
+          git push
