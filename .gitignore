@@ -3,3 +3,4 @@ data/*
 !data/tableau_*.csv
 __pycache__/
 .DS_Store
+.vscode/

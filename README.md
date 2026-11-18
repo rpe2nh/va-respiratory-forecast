@@ -4,6 +4,8 @@ Weekly forecasts of flu hospital admissions in Virginia, 1–4 weeks ahead, buil
 
 **[Live Tableau dashboard →](https://public.tableau.com/app/profile/mark.espiritu/viz/VirginiaFluForecast/VirginiaFluForecast)**
 
+Updates automatically every week: GitHub Actions reruns the forecast, a Google Sheet pulls the new results, and Tableau Public refreshes daily.
+
 ## Key findings
 
 - **The model beats a simple baseline by 20–37%.** In backtests on the 2024-25 and 2025-26 seasons, the average miss 4 weeks ahead was 151 admissions per week, vs. 240 for "next week = this week."
